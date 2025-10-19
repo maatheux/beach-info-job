@@ -2,7 +2,7 @@
 
 on:
   schedule:
-    - cron: '0 23 * * *' # roda todo dia às 9h UTC (6h no Brasil)
+    - cron: '0 9 * * *' # roda todo dia às 9h UTC (6h no Brasil)
   workflow_dispatch: # permite rodar manualmente
 
 jobs:
@@ -28,4 +28,4 @@ jobs:
 
       - name: Executar script
         run: |
-          python baixar_pdfs.py
+          python main.py
