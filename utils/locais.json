@@ -1,0 +1,148 @@
+﻿{
+  "locais": [
+    {
+      "cidade": "Paraty",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Paraty"
+    },
+    {
+      "cidade": "Angra dos Reis",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Angra-dos-Reis"
+    },
+    {
+      "cidade": "Angra dos Reis",
+      "regiao": "Ilha Grande",
+      "uf": "RJ",
+      "slug": "Ilha-Grande"
+    },
+    {
+      "cidade": "Conceição de Jacareí",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Conceicao-Jacarei"
+    },
+    {
+      "cidade": "Costa Verde",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Costa-Verde"
+    },
+    {
+      "cidade": "Rio de Janeiro",
+      "regiao": "Zona Oeste e Zona Sul",
+      "uf": "RJ",
+      "slug": "Zona-oeste-e-Zona-sul"
+    },
+    {
+      "cidade": "Rio de Janeiro",
+      "regiao": "Ilha do Governador e Ramos",
+      "uf": "RJ",
+      "slug": "Ilha-do-Governador-e-Ramos"
+    },
+    {
+      "cidade": "Rio de Janeiro",
+      "regiao": "Sepetiba",
+      "uf": "RJ",
+      "slug": "Sepetiba"
+    },
+    {
+      "cidade": "Rio de Janeiro",
+      "regiao": "Paquetá",
+      "uf": "RJ",
+      "slug": "Paquetá"
+    },
+    {
+      "cidade": "Magé e São Gonçalo",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Magé-e-São-Gonçalo"
+    },
+    {
+      "cidade": "Niterói",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Niterói"
+    },
+    {
+      "cidade": "Maricá",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Maricá"
+    },
+    {
+      "cidade": "Saquarema",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Saquarema"
+    },
+    {
+      "cidade": "Araruama",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Araruama"
+    },
+    {
+      "cidade": "Iguaba Grande e São Pedro da Aldeia",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Iguaba-Grande-e-São-Pedro"
+    },
+    {
+      "cidade": "Arraial do Cabo",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Arraial-do-Cabo"
+    },
+    {
+      "cidade": "Cabo Frio",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Cabo-Frio"
+    },
+    {
+      "cidade": "Búzios",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Búzios"
+    },
+    {
+      "cidade": "Casimiro de Abreu e Unamar",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Casimiro-de-Abreu-e-Unamar-Cabo-Frio"
+    },
+    {
+      "cidade": "Rio das Ostras",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Rio-das-Ostras"
+    },
+    {
+      "cidade": "Macaé",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Macaé"
+    },
+    {
+      "cidade": "Campos dos Goytacazes",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "Campos"
+    },
+    {
+      "cidade": "São João da Barra",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "São-João-da-Barra"
+    },
+    {
+      "cidade": "São Francisco do Itabapoana",
+      "regiao": "",
+      "uf": "RJ",
+      "slug": "São-Francisco-de-Itabapoana"
+    }
+  ]
+}
