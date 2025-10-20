@@ -47,6 +47,7 @@ def download_reports():
             if (resultDownload == filename):
                 downloadValid = False
                 i['dateRef'] = dateRef.isoformat()
+                i['dateRefFormatted'] = dateRef.strftime('%Y-%m-%d')
                 i['fileDownloadPath'] = filename
                 dataList.append(i)
             

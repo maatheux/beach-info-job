@@ -131,7 +131,7 @@ def check_date_report(info_list):
     if len(response.data) == 0:
         return False
         
-    return response.data[0]['report_date'] == element['report_date'].strftime('%Y-%m-%d')
+    return response.data[0]['report_date'] == element['dateRefFormatted'].strftime('%Y-%m-%d')
 
 
 if __name__ == "__main__":
