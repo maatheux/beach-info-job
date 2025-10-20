@@ -18,7 +18,7 @@ def download_file(url, filename):
             return filename
     
         else:
-            print("Erro")
+            print("Error - report not found")
             return None
     
     except Exception as e:

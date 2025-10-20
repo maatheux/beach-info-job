@@ -6,7 +6,7 @@ from supabase import create_client
 from datetime import datetime
 
 
-def start_insert(file_path, report_date):
+def start_insert(file_path, report_date, dateRefFormatted):
     extracted_table = extract_table(file_path)
     table = pd.DataFrame(extracted_table['data'])
     
@@ -57,7 +57,8 @@ def start_insert(file_path, report_date):
     for data in data_table:
         print(data)
     
-    if check_date_report(data_table):
+    if check_date_report(data_table, dateRefFormatted):
+        print("Report already inserted")
         return
 
     insert_info(data_table)
@@ -96,13 +97,14 @@ def insert_info(table_info):
             .execute()
         )
 
+        print("Report inserted successfully")
         print(response)
 
     except Exception as ex:
         print(ex)
 
 
-def check_date_report(info_list):
+def check_date_report(info_list, dateRefFormatted):
     load_dotenv()
     
     element = info_list[0]
@@ -131,7 +133,7 @@ def check_date_report(info_list):
     if len(response.data) == 0:
         return False
         
-    return response.data[0]['report_date'] == element['dateRefFormatted']
+    return response.data[0]['report_date'] == dateRefFormatted
 
 
 if __name__ == "__main__":

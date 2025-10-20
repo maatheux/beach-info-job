@@ -13,7 +13,7 @@ def start():
     print(report_info)
     
     for i in report_info:
-        start_insert(i['fileDownloadPath'], i['dateRef'])
+        start_insert(i['fileDownloadPath'], i['dateRef'], i['dateRefFormatted'])
 
     remove_pdfs()
     
