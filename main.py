@@ -28,7 +28,7 @@ def download_reports():
         dateRef = today + timedelta(days=1)
         
         downloadValid = True
-        dateAux = 60
+        dateAux = 15
         while downloadValid and dateAux > 0:
             dateRef = dateRef - timedelta(days=1)
             
