@@ -6,12 +6,14 @@ from supabase import create_client
 from datetime import datetime
 
 
-def start_insert(file_path, report_date, dateRefFormatted):
+def start_insert(file_path, report_date, dateRefFormatted, slug):
     extracted_table = extract_table(file_path)
     table = pd.DataFrame(extracted_table['data'])
     
     dataList = []
     trat_code_list = []
+
+    error_beach_id_list = []
 
     title = next(table.itertuples(index=False), None)
 
@@ -39,14 +41,28 @@ def start_insert(file_path, report_date, dateRefFormatted):
         else:
             code = None
 
+        beach_id = get_beach_id(code, slug)
+
+        if beach_id["id"] is None and idx != 0:
+            error_beach_id_list.append(beach_id)
+            continue
+
         dataList.append({
             "location_code": code,
             "water_status": "Amostragem Não Realizada" if row[coluna_status] not in ['Própria', 'Imprópria'] else row[coluna_status],
-            "report_date": report_date
+            "report_date": report_date,
+            "beach_id": beach_id["id"]
         })
 
         idx+=1
 
+    if len(error_beach_id_list) > 0:
+        if not os.path.exists('../logs'):
+            os.makedirs('../logs')
+
+        with open(f'../logs/error_beach_id_{datetime.now().strftime("%Y%m%d%H%M%S")}.txt', 'w') as f:
+            for error in error_beach_id_list:
+                f.write(f"Code: {error['code']}, Slug: {error['slug']}, Error: {error['error_msg']}\n")
 
     data_table = dataList[1:]
 
@@ -136,9 +152,43 @@ def check_date_report(info_list, dateRefFormatted):
     return response.data[0]['report_date'] == dateRefFormatted
 
 
+def get_beach_id(code, slug):
+    load_dotenv()
+
+    url = os.getenv("SUPABASE_URL")
+    key = os.getenv("SECRET_KEY")
+
+    supabaseClient = create_client(url, key)
+
+    try:
+        beach_id = (
+            supabaseClient.table("beach_location")
+                .select("id")
+                .eq("location_code", code)
+                .eq("slug", slug)
+                .execute()
+        ).data[0]['id']
+
+    except Exception as ex:
+        return {"id": None, "error_msg": str(ex), "code": code, "slug": slug}
+
+    return {"id": beach_id, "error_msg": None}
+
+
 if __name__ == "__main__":
-    start_insert(f'{"."}./pdfs/Paraty-13-10-25.pdf', datetime(2025, 10, 13))
+    start_insert(f'{"."}./pdfs/Zona-oeste-e-Zona-sul-22-10-25.pdf', datetime(2025, 10, 13), datetime(2025, 10, 13).strftime('%Y-%m-%d'), "Zona-oeste-e-Zona-sul")
+
+    # print(get_beach_id("MR0000", "Paquetá"))
 
     # check_date_report([{"location_code": 'PO00', 'report_date': datetime(2025, 10, 13)}])
-    
+
+    # extract_table('../pdfs/Zona-oeste-e-Zona-sul-22-10-25.pdf')
+
+    # print({
+    #     "name": "Itacoatiara",
+    #     "location": "Em frente ao costão",
+    #     "location_code": 1980,
+    #     "city": "Niteroi"
+    # })
+
     
