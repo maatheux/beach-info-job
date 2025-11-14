@@ -2,14 +2,14 @@
 
 on:
   schedule:
-    - cron: '0 9 * * *' # roda todo dia às 9h UTC (6h no Brasil)
-  workflow_dispatch: # permite rodar manualmente
+    - cron: '0 9 * * *' # 9h UTC
+  workflow_dispatch:
 
 jobs:
   run:
     runs-on: ubuntu-latest
 
-    env: # 🔐 variáveis de ambiente seguras
+    env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
@@ -20,7 +20,7 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12.3'
 
       - name: Instalar dependências
         run: |
