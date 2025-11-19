@@ -2,9 +2,8 @@ import json
 import logging
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-
+from src.utils.pdfs_functions import download_file
 from src.config.logger import Logger
-from src.utils.scripts_run.dowload_pdf import download_file
 from src.config.paths import DATA_DIR
 
 def download_reports():
@@ -25,7 +24,7 @@ def download_reports():
             date_ref = date_ref - timedelta(days=1)
 
             url = f"https://www.inea.rj.gov.br/wp-content/uploads/{date_ref.strftime('%Y')}/{date_ref.strftime('%m')}/{i['slug']}-{date_ref.strftime('%d-%m-%y')}.pdf"
-            filename = f"data/pdfs/{i['slug'].lower()}-base.pdf"
+            filename = f"{DATA_DIR}/pdfs/{i['slug'].lower()}-base.pdf"
 
             result_download = download_file(url, filename)
 
