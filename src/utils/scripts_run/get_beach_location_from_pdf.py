@@ -50,7 +50,7 @@ def insert_info(table_info):
     
 
 if __name__ == "__main__":
-    table = extract_table("../pdfs/casimiro-de-abreu-e-unamar-cabo-frio-base.pdf ")
+    table = extract_table("../data/pdfs/casimiro-de-abreu-e-unamar-cabo-frio-base.pdf ")
     table = pd.DataFrame(table['data'])
     # print(table.to_string())
 

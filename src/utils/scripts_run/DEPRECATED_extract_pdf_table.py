@@ -30,7 +30,7 @@ def extract_table(file_path):
     
 
 if __name__ == "__main__":
-    table = extract_table("../pdfs/saquarema-base.pdf")
+    table = extract_table("../data/pdfs/saquarema-base.pdf")
     table = pd.DataFrame(table['data'])
     print(table.to_string())
     
