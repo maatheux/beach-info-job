@@ -1,72 +1,41 @@
-﻿import json
-import os
-import shutil
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
+﻿import logging
+import sys
 
-from scripts_run.dowload_pdf import download_file
-from scripts_run.insert_beach_status import start_insert
+from src.config.logger import Logger
+from src.extractors import download_reports
+from src.loaders import insert_beach_status
+from src.transformers import structuring_data
+from src.utils import remove_pdfs
 
+class BeachEtlPipeline:
+    def __init__(self):
+        self.logger = Logger().get_logger(__name__)
 
-def start():
-    report_info = download_reports()
-    print(report_info)
-    
-    for i in report_info:
-        start_insert(i['fileDownloadPath'], i['dateRef'], i['dateRefFormatted'], i['slug'])
+    def run(self):
+        self.logger.warning('Starting BeachEtlPipeline')
 
-    remove_pdfs()
-    
+        try:
+            # Extract
+            reports_info = download_reports()
+            self.logger.warning(f"Downloaded {len(reports_info)} reports")
 
-def download_reports():
-    with open('utils/locais.json', 'r', encoding='utf-8-sig') as file:
-        jsonData = json.load(file)
-        
-    dataList = []
-    today = datetime.today()
-    for i in jsonData['locais']:
-        dateRef = today + timedelta(days=1)
-        
-        downloadValid = True
-        dateAux = 15
-        while downloadValid and dateAux > 0:
-            dateRef = dateRef - timedelta(days=1)
-            
-            url = f"https://www.inea.rj.gov.br/wp-content/uploads/{dateRef.strftime('%Y')}/{dateRef.strftime('%m')}/{i['slug']}-{dateRef.strftime('%d-%m-%y')}.pdf"
-            filename = f"./pdfs/{i['slug'].lower()}-base.pdf"
-            
-            print(url)
-            resultDownload = download_file(url, filename)
-            
-            if resultDownload is None:
-                dateRefMonthAlt = dateRef + relativedelta(months=1)
-                url = f"https://www.inea.rj.gov.br/wp-content/uploads/{dateRef.strftime('%Y')}/{dateRefMonthAlt.strftime('%m')}/{i['slug']}-{dateRef.strftime('%d-%m-%y')}.pdf"    
-                print(url)
-                resultDownload = download_file(url, filename)
-            
-            if (resultDownload == filename):
-                downloadValid = False
-                i['dateRef'] = dateRef.isoformat()
-                i['dateRefFormatted'] = dateRef.strftime('%Y-%m-%d')
-                i['fileDownloadPath'] = filename
-                dataList.append(i)
-            
-            dateAux -= 1
-    
-    return dataList
+            # Transform and Load
+            for i in reports_info:
+                structured_data = structuring_data(i['fileDownloadPath'], i['dateRef'], i['slug'])
+                insert_beach_status(structured_data, i['dateRefFormatted'])
+                self.logger.warning(f"Processed report for {i['slug']} dated {i['dateRefFormatted']}")
+
+            # Cleanup
+            remove_pdfs()
+            self.logger.warning("Removed temporary PDF files")
+
+            self.logger.warning('Finished BeachEtlPipeline')
 
 
-def remove_pdfs():
-    pdf_dir = './pdfs'
-    
-    for name in os.listdir(pdf_dir):
-        path = os.path.join(pdf_dir, name)
-        
-        if os.path.isfile(path) or os.path.islink(path):
-            os.remove(path)
-        elif os.path.isdir(path):
-            shutil.rmtree(path)
+        except Exception as e:
+            self.logger.warning(f"An error occurred in pipeline: {e}", exc_info=True)
 
 
 if __name__ == "__main__":
-    start()
+    pipeline = BeachEtlPipeline()
+    pipeline.run()

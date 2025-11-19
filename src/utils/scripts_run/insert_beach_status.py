@@ -57,8 +57,8 @@ def start_insert(file_path, report_date, dateRefFormatted, slug):
         idx+=1
 
     if len(error_beach_id_list) > 0:
-        if not os.path.exists('../logs'):
-            os.makedirs('../logs')
+        if not os.path.exists('../../../logs'):
+            os.makedirs('../../../logs')
 
         with open(f'../logs/error_beach_id_{datetime.now().strftime("%Y%m%d%H%M%S")}.txt', 'w') as f:
             for error in error_beach_id_list:

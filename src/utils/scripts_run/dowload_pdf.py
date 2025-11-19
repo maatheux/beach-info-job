@@ -1,7 +1,9 @@
-﻿import requests
+﻿import logging
+
+import requests
 
 
-def download_file(url, filename):
+def download_file(url: str, filename: str) -> str | None:
     try:
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -18,11 +20,9 @@ def download_file(url, filename):
             return filename
     
         else:
-            print("Error - report not found")
             return None
     
     except Exception as e:
-        print(e)
         return None
     
 
