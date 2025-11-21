@@ -30,7 +30,7 @@ def remove_pdfs():
     for name in os.listdir(pdf_dir):
         path = os.path.join(pdf_dir, name)
 
-        if os.path.isfile(path) or os.path.islink(path):
+        if (os.path.isfile(path) or os.path.islink(path)) and name.endswith('.pdf'):
             os.remove(path)
         elif os.path.isdir(path):
             shutil.rmtree(path)
